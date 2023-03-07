@@ -2,45 +2,13 @@ provider "aws" {
   region = "us-west-2"
 }
 
-data "aws_ami" "amazon-linux-2" {
-  most_recent = true
-
-
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
-
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm*"]
-  }
-}
-
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
 data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.sh")
 }
 
 # EC2 Instances
 resource "aws_instance" "awx" {
-  ami                         = data.aws_ami.amazon-linux-2.id
+  ami                         = "ami-09195cb76ab892888"
   instance_type               = "t3.large"
   user_data                   = data.template_file.user_data.rendered
   associate_public_ip_address = true
