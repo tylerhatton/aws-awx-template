@@ -2,18 +2,15 @@ provider "aws" {
   region = "us-west-2"
 }
 
-data "template_file" "user_data" {
-  template = file("${path.module}/templates/user_data.sh")
-}
-
 # EC2 Instances
 resource "aws_instance" "awx" {
   ami                         = "ami-09195cb76ab892888"
   instance_type               = "t3.large"
-  user_data                   = data.template_file.user_data.rendered
+  user_data                   = templatefile("${path.module}/templates/user_data.sh", {})
+  key_name                    = "wwt-hattont-workmac"
   associate_public_ip_address = true
 
-  security_groups = [ aws_security_group.awx_sg.name ]
+  security_groups = [aws_security_group.awx_sg.name]
 
   tags = {
     Name = "AWX"
