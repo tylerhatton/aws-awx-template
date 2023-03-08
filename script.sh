@@ -9,15 +9,6 @@ sudo useradd -m -s /bin/bash awx
 # add user to docker group
 sudo usermod -a -G docker awx
 
-# python 3.9 install steps
-# cd /opt
-# sudo wget https://www.python.org/ftp/python/3.9.16/Python-3.9.16.tgz 
-# sudo tar xzf Python-3.9.16.tgz 
-# cd Python-3.9.16 
-# sudo ./configure --enable-optimizations 
-# sudo make altinstall 
-# sudo rm -f /opt/Python-3.9.16.tgz
-
 sudo yum install python39
 
 sudo python3.9 -m pip install ansible
